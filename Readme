@@ -1,0 +1,75 @@
+go test go-unit\calculator     running particular package
+go test -v go-unit\mocking 
+go test -v ./... to run all  v for verbose
+
+Difference betweek UNIT test and other kind test {Integration tests, Functional Tests, End to End tests}
+
+The integration and function tests as the name says we gonna test the application integrated
+for example function or end to end test are used to test the interface like buttons forms etc.
+Integration test is when you are testing endpoints, integration between modules database repositories
+so in this kind of tests you usually want to make sure that one thing is successfully talking with another
+
+'Integration test':
+'More coverage in the begining':
+  > As the integration test we test many things connected for example an entire request, the test will 
+  go through a lot of code and rules so you have a huge code coverage in a single test. Of course have a 
+  greate coverage don't' necessarily mean that you are testing many things, you are just passing through the code
+  > This may be considered as an advantage So they are a good start.
+  > Even this kind of test are not asserting the rules in detail, just the fact of passing through the code
+  is a good guarantee. 
+  > Imagine that you have a test on your login endpoint, you are expecting 200 when you provide valid credentials
+  if any error happen in this endpoint stops from returning 200 the test will fail and this is good.
+  > The bad thing is that they are slower of course this kind of test will be very slow because it will connect
+  on the database it will read the code from lot of classes, you have the request time.
+  So this kind of test is not recommend to test small rules of business logic they are used to only test
+  the integration. Recommend to have one or two tests for each endpoint.
+  Eg: for the login endpoint you have a test for successful login and another to wrong password.
+  > If you would like to test more rules in detail do it with unit tests.
+  > In the integration test you run a lot of code in a single test.
+  So testing our request for example if the test fail probably you will need to debug check the logs,
+   to see exactly where is failing.
+  > Different from unit test that the failing message will provide what class or method is failing.
+   'Hard to setup'
+  > In the integration test, you usually need an environment to run with database, cache etc.
+  > So prabably you need to configure this entire application in some Docker for example and run the test inside.
+
+'Unit Test':
+  > In the unit test we break the application into small pieces we isolate these pieces from its integrations
+  and we run a series of tests. These small pieces are called units.
+  > Sometimes the unit is a method but if the method have two responsibilities for example we may have two 
+  units in a single method.
+  Characterstics:
+  > Fast because they are very isolated. 
+  > If you have practically only the cost of your language running in the memory.
+  > The good thing about it is that we can have a quick feedback if something is failing when you are 
+   programming.
+  > Easy to find a fail reason as we learned in the past lessions, when the test fail you have the 
+  exact reason and the exact line where the test is failing because every unit test is made on specefic 
+  parts of the code.
+
+'Many test have good coverage.'
+   > A single unit test only cover a small part of our code. You need many tests to get a great coverage,
+   on the other hand a good coverage of unit tests have way more value than integration tests, because 
+   many units test means that you have more assertions.
+'Easy to setup':
+   > As this kind of test is isolated from the infrastucture the setup is very simple.
+   > In go for example you only need to have Go installed in the machine and use the testing package.
+
+Mock:
+ We usually use the term mock, but by the concept in the books, the correct term is test double.
+ mock is just a type of test double.
+
+ > We also have other types like stubs, dummies etc.
+ Stub:
+  A stub is an object that have the same behavior from the original object.
+  They are very useful to create our desired scenarios.
+  
+The difference between stubs and mocks is that stub you just create a copy of the real object
+and amke it return the desired values.
+And in the mocks we will also do assertions in the behavior 
+So you do assertions for ensure that some method will be called or not.  
+ 
+Dummy: 
+ A dummy is when you pass some object just to satisfy the argument list of some method call.
+ In the most cases dummys are simple object so we don't need to use mocking tools to create, 
+ just create the real object.  
